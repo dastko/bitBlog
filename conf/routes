@@ -6,6 +6,7 @@
 GET         /                    controllers.Application.index()
 GET         /registration        controllers.UserController.registration()
 GET         /login               controllers.UserController.signin()
+POST        /login               controllers.UserController.login()
 POST        /registration        controllers.UserController.signup()
 GET         /post                controllers.PostController.newPost()
 POST        /post                controllers.PostController.addPost()
