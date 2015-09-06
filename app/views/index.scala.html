@@ -20,8 +20,9 @@
 
                     <!-- First Blog Post -->
                     <!-- Ovako ne raditi - poslati listu iz kontrolera! -->
+
                 @for(post <- Post.findAllPosts()){
-                <h2>
+                    <h2>
                     <a href="@routes.PostController.getPost(post.getId)">@post.getTitle</a>
                 </h2>
                 <p class="lead">

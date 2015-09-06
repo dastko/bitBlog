@@ -42,11 +42,15 @@ public class PostController extends Controller {
             if (postForm.hasErrors()) {
                 return badRequest(newpost.render(postForm, postList));
             }
-            Post newPost = new Post();
-            newPost.setTitle(postForm.get().getTitle());
-            newPost.setContent(postForm.get().getContent());
+            Post newPost = postForm.get();
             newPost.setUser(getUser());
             newPost.save();
+            //Same 
+//            Post newPost = new Post();
+//            newPost.setTitle(postForm.get().getTitle());
+//            newPost.setContent(postForm.get().getContent());
+//            newPost.setUser(getUser());
+//            newPost.save();
             flash("postAdded", "Post added successfully");
             return redirect("/");
         }catch (Exception e){
