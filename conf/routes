@@ -3,14 +3,21 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
-GET         /registration        controllers.UserController.registration()
-GET         /login               controllers.UserController.signin()
-POST        /login               controllers.UserController.login()
-POST        /registration        controllers.UserController.signup()
-GET         /post                controllers.PostController.newPost()
-POST        /post                controllers.PostController.addPost()
+GET         /                              controllers.Application.index()
+GET         /registration                  controllers.Application.registration()
+POST        /registration                  controllers.Application.signup()
+GET         /login                         controllers.Application.signin()
+POST        /login                         controllers.Application.login()
+GET         /logout                        controllers.Application.logout()
+GET         /profile/:username             controllers.UserController.showUser(username : String)
+GET         /profile/edit/:username        controllers.UserController.showEditUser(username: String)
+POST        /profile/edit/:username        controllers.UserController.editUser(username : String)
+GET         /post                          controllers.PostController.newPost()
+GET         /post/:id                      controllers.PostController.getPost(id: Long)
+POST        /post/:id                      controllers.CommentController.addComment(id: Long)
+POST        /post                          controllers.PostController.addPost()
+GET         /post/delete                   controllers.PostController.deletePost(id: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)

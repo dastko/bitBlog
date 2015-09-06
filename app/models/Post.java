@@ -14,18 +14,18 @@ import java.util.List;
 public class Post extends Model {
 
     @Id
-    public Long id;
-    @Constraints.MaxLength(255)
-    @Constraints.Required
-    private String title;
+    private Long id;
     @Column(columnDefinition = "TEXT")
     @Constraints.Required
-    public String content;
+    private String content;
     @ManyToOne
-    public User user;
+    private User user;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
     @Formats.DateTime(pattern="dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
-    public Date date = new Date();
+    private Date date = new Date();
+    private String title;
 
     public static final Model.Finder<Long, Post> find = new Model.Finder<>(
             Post.class);
@@ -45,7 +45,7 @@ public class Post extends Model {
     }
 
     public static List<Post> findAllPosts(){
-        return find.findList();
+        return find.orderBy("date desc").findList();
     }
 
     public String getContent() {
@@ -62,5 +62,21 @@ public class Post extends Model {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

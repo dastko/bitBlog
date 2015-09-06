@@ -13,7 +13,6 @@
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/boostrap.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="@routes.Assets.versioned("javascripts/hello.js")" type="text/javascript"></script>
     </head>
     <body>
@@ -21,7 +20,7 @@
         <div class="navbar navbar-inverse">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="/" class="navbar-brand">devFacebook</a>
+                    <a href="/" class="navbar-brand">bitBlog</a>
                 </div>
                 @if(currentUser == null) {
                     <ul class="nav navbar-nav pull-right">
@@ -36,10 +35,10 @@
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/dashboard">Dashboard</a></li>
-                            <li><a href="/user">Profile</a></li>
+                            <li><a href="/post">Add New Post</a></li>
+                            <li><a href="/profile/@currentUser.getEmail">Profile</a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Logout</a></li>
+                            <li><a href="/logout">Logout</a></li>
                         </ul>
                     </div>
                 }
@@ -47,6 +46,11 @@
         </div>
             <!-- /.container -->
         @content
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <script src="@routes.Assets.versioned("javascripts/app.js")" type="text/javascript"></script>
 
     </body>
 </html>

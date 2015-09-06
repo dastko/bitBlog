@@ -1,0 +1,34 @@
+@(user: User)
+
+@main("Welcome to Play") {
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@user.getEmail</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://free-profile-pics.com/profile-pictures/01232014/images/chuck-norris-profile-picture-72x72.PNG" class="img-circle img-responsive">
+                            </div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <form class="form-signin" method="POST" action="@routes.UserController.editUser(user.getEmail)">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" value="@user.getName">
+                                    <input type="text" class="form-control" id="adress" name="adress" placeholder="Adress" value="@user.getAdress">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" value="@user.getPhone">
+                                    <br>
+                                    <span class="pull-right">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a class="btn btn-info" type="button" href="@routes.UserController.showUser(user.getEmail)">Reset </a>
+                                    </span>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,62 @@
+@(user: User)
+
+@main("Welcome to Play") {
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+                @if(user.getAdress == null || user.getName == null || user.getPhone == null) {
+                    <div class="bs-component">
+                        <div class="alert alert-dismissible alert-info">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>Heads up!</strong> Please <a href="#" class="alert-link">fill out your (empty) information below</a>
+                            , it's super important.
+                        </div>
+                    </div>
+                }
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@user.getEmail</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://free-profile-pics.com/profile-pictures/01232014/images/chuck-norris-profile-picture-72x72.PNG" class="img-circle img-responsive"> </div>
+                            <div class=" col-md-9 col-lg-9 ">
+                                <table class="table table-user-information">
+                                    <tbody>
+                                        <tr>
+                                            <td>ID number:</td>
+                                            <td>@user.getId</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Registration date:</td>
+                                            <td>@user.getRegistration</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>@user.getName</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Home Address</td>
+                                            <td>@user.getAdress</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>@user.getEmail</td>
+                                        </tr>
+                                        <td>Phone Number</td>
+                                        <td>@user.getPhone</td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                            <span class="pull-right">
+                                <a href="@routes.UserController.showEditUser(user.getEmail)" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

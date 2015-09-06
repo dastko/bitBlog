@@ -3,12 +3,20 @@
 
 # --- !Ups
 
+create table comment (
+  id                        bigint auto_increment not null,
+  post_id                   bigint,
+  user_id                   bigint,
+  content                   TEXT,
+  constraint pk_comment primary key (id))
+;
+
 create table post (
   id                        bigint auto_increment not null,
-  title                     varchar(255),
   content                   TEXT,
   user_id                   bigint,
   date                      datetime,
+  title                     varchar(255),
   constraint pk_post primary key (id))
 ;
 
@@ -18,19 +26,26 @@ create table user (
   name                      varchar(255),
   password                  varbinary(64) not null,
   registration              datetime,
-  gender                    varchar(255),
+  adress                    varchar(255),
+  phone                     varchar(255),
   constraint uq_user_email unique (email),
   constraint pk_user primary key (id))
 ;
 
-alter table post add constraint fk_post_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_post_user_1 on post (user_id);
+alter table comment add constraint fk_comment_post_1 foreign key (post_id) references post (id) on delete restrict on update restrict;
+create index ix_comment_post_1 on comment (post_id);
+alter table comment add constraint fk_comment_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_comment_user_2 on comment (user_id);
+alter table post add constraint fk_post_user_3 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_post_user_3 on post (user_id);
 
 
 
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table comment;
 
 drop table post;
 

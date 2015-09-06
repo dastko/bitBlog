@@ -1,4 +1,4 @@
-@(message: String)(signUpForm: Form[UserController.Registration])
+@(message: String)(signUpForm: Form[Application.Registration])
 
 @main("Welcome to Play") {
 
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             }
-            <form class="form-signin" method="POST" action="@routes.UserController.signup()">
+            <form class="form-signin" method="POST" action="@routes.Application.signup()">
                 <legend>Registration form</legend>
                 <label for="inputEmail" class="sr-only">Email</label>
                 <input type="email" value='@signUpForm("email").value' id="email" name="email" class="form-control" placeholder="Email address" required autofocus>

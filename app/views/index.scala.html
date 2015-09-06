@@ -17,27 +17,44 @@
                         </div>
                         <div id="source-button" class="btn btn-primary btn-xs" style="display : none ;">&lt; &gt;</div></div>
                 }
-                    <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
 
                     <!-- First Blog Post -->
+                    <!-- Ovako ne raditi - poslati listu iz kontrolera! -->
+                @for(post <- Post.findAllPosts()){
                 <h2>
-                    <a href="#">Blog Post Title</a>
+                    <a href="@routes.PostController.getPost(post.getId)">@post.getTitle</a>
                 </h2>
                 <p class="lead">
-                    by <a href="/">Start Bootstrap</a>
+                    by <a href="/">@post.getUser.getEmail</a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on @post.getDate</p>
                 <hr>
-                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <img class="img-responsive" src="@routes.Assets.versioned("/images/image" + post.getId + ".jpg")" alt="">
                 <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <p>@post.getContent.substring(0, 240)...</p>
+                <a class="btn btn-primary" href="@routes.PostController.getPost(post.getId)">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
+                }
+            </div>
+            <div class="col-md-4">
+                    <!-- Side Widget Well -->
+                <div class="well">
+                    <h4>About Us Widget</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                </div>
             </div>
         </div>
+    </div>
+    <div class="container">
+            <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+                <!-- /.row -->
+        </footer>
     </div>
 }

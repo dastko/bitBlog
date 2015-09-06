@@ -23,7 +23,7 @@ public class User extends Model{
     private Long id;
     @Column(unique = true)
     @Constraints.MaxLength(255)
-    @Constraints.Required
+    @Constraints.Required()
     @Constraints.Email
     private String email;
     @Constraints.MaxLength(255)
@@ -31,13 +31,20 @@ public class User extends Model{
     private String name;
     @Column(length = 64, nullable = false)
     private byte[] password;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Post> posts;
     @Formats.DateTime(pattern = "dd/MM/yyyy")
     @Column(columnDefinition = "datetime")
     private Date registration = new Date();
-    @Constraints.MaxLength(10)
-    private String gender;
+    @Constraints.MaxLength(150)
+    private String adress;
+    @Constraints.MaxLength(150)
+    private String phone;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Post> posts;
+
+    public Date getRegistration() {
+        return registration;
+    }
+
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -74,8 +81,21 @@ public class User extends Model{
                         findUnique();
     }
 
+    public static boolean exists(String email){
+        return (find.where().eq("email", email).findRowCount() == 1) ? true: false;
+    }
+
     public static User findById(Long id){
         return find.byId(id);
+    }
+
+    public byte[] getPassword() {
+        return password;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -106,11 +126,24 @@ public class User extends Model{
         this.posts = posts;
     }
 
-    public String getGender() {
-        return gender;
+    public Long getId() {
+        return id;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public String getAdress() {
+        return adress;
     }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
 }
