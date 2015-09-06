@@ -45,7 +45,7 @@ public class PostController extends Controller {
             Post newPost = postForm.get();
             newPost.setUser(getUser());
             newPost.save();
-            //Same 
+            //Same
 //            Post newPost = new Post();
 //            newPost.setTitle(postForm.get().getTitle());
 //            newPost.setContent(postForm.get().getContent());

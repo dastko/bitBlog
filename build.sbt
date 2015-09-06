@@ -11,7 +11,8 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   javaCore,
-  "mysql" % "mysql-connector-java" % "5.1.27"
+  "mysql" % "mysql-connector-java" % "5.1.27",
+  "com.typesafe.play" %% "play-mailer" % "2.4.1"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

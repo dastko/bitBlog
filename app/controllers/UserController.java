@@ -25,7 +25,7 @@ public class UserController extends Controller {
     public Result showUserPage(String username) {
         try {
             User user = SessionHelper.currentUser(ctx());
-            if(!user.getEmail().contains(username)){
+            if (!user.getEmail().contains(username)) {
                 badRequest(views.html.errorPages.badRequest.render("Mismatch"));
             }
             return ok(profile.render(user));
@@ -64,6 +64,23 @@ public class UserController extends Controller {
         } catch (Exception e) {
             logger.warn("Update failed:" + e);
             return redirect("/login");
+        }
+    }
+
+    public Result emailValidation(String token) {
+        try {
+            User user = User.findUserByToken(token);
+            if (token == null) {
+                return redirect("/");
+            }
+            if (User.validateUser(user)) {
+                return redirect("/login");
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception e){
+            logger.warn("Email Validation Exception:" + e);
+            return redirect("login");
         }
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by dastko on 9/4/15.
  */
 @Entity
-public class User extends Model{
+public class User extends Model {
 
     @Id
     private Long id;
@@ -39,7 +39,9 @@ public class User extends Model{
     private String phone;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Post> posts;
-
+    @Column(unique = true)
+    private String token;
+    private boolean validated = false;
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -62,10 +64,24 @@ public class User extends Model{
                 .findUnique();
     }
 
-    public static User findByEmail(String email){
+    public static User findByEmail(String email) {
         return find.where()
                 .eq("email", email.toLowerCase()).
                         findUnique();
+    }
+
+    public static User findUserByToken(String token) {
+        return find.where().eq("token", token).findUnique();
+    }
+
+    public static boolean validateUser(User user) {
+        if (user == null) {
+            return false;
+        }
+        user.setToken(null);
+        user.setValidated(true);
+        user.save();
+        return true;
     }
 
     public void setId(Long id) {
@@ -116,4 +132,19 @@ public class User extends Model{
         return registration;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
 }

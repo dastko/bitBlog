@@ -32,9 +32,10 @@
                 <hr>
                 <img class="img-responsive" src="@routes.Assets.versioned("/images/image" + post.getId + ".jpg")" alt="">
                 <hr>
-                <p>@post.getContent.substring(0, 240)...</p>
+                    @if(post.getContent.length > 240) {
+                        <p>@post.getContent.substring(0, 240)...</p>
+                    }
                 <a class="btn btn-primary" href="@routes.PostController.getPost(post.getId)">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
                 <hr>
                 }
             </div>

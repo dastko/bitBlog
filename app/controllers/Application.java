@@ -1,18 +1,23 @@
 package controllers;
 
+import helpers.MailHelper;
 import models.Post;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
+import java.util.UUID;
+
 public class Application extends Controller {
 
     final static Logger logger = LoggerFactory.getLogger(Application.class);
+    private static String url = Play.application().configuration().getString("url");
 
     public Result index() {
         String message = flash("postAdded");
@@ -46,7 +51,11 @@ public class Application extends Controller {
                 User user = new User();
                 user.setEmail(newUser.email);
                 user.setPassword(newUser.password);
+                user.setToken(UUID.randomUUID().toString());
                 user.save();
+                // Sending Email To user
+                String host = url + "validate/" + user.getToken();
+                MailHelper.send(user.getEmail(), host);
                 session().clear();
                 session("username", newUser.email);
                 return redirect("/");
