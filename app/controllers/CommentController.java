@@ -74,7 +74,6 @@ public class CommentController extends Controller {
     }
 
     public static class CommentForm {
-
         @Constraints.Required
         public String comment;
     }

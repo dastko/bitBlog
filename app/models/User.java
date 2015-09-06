@@ -3,8 +3,6 @@ package models;
 import com.avaje.ebean.Model;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
-import play.data.validation.ValidationError;
-
 import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -80,7 +78,7 @@ public class User extends Model {
         }
         user.setToken(null);
         user.setValidated(true);
-        user.save();
+        user.update();
         return true;
     }
 
@@ -138,10 +136,6 @@ public class User extends Model {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public boolean isValidated() {
-        return validated;
     }
 
     public void setValidated(boolean validated) {

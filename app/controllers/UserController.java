@@ -80,7 +80,7 @@ public class UserController extends Controller {
             }
         } catch (Exception e){
             logger.warn("Email Validation Exception:" + e);
-            return redirect("login");
+            return redirect("/login");
         }
     }
 }
