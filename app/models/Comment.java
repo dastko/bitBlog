@@ -39,6 +39,16 @@ public class Comment extends Model {
                 .findList();
     }
 
+    public static Comment findById(Long id){
+        return find.byId(id);
+    }
+    public static void delete(Long id){
+        find.byId(id).delete();
+    }
+
+    public Long getId() {
+        return id;
+    }
     public void setContent(String content) {
         this.content = content;
     }

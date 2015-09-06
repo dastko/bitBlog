@@ -30,7 +30,7 @@ public class Post extends Model {
     public static final Model.Finder<Long, Post> find = new Model.Finder<>(
             Post.class);
 
-    public static List<Post> findBlogPostsByUser(User user) {
+    public static List<Post> findBlogPostsByUser(final User user) {
         return find
                 .where()
                 .eq("user", user)

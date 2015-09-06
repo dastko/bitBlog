@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,10 +40,6 @@ public class User extends Model{
     @OneToMany(cascade = CascadeType.ALL)
     private List<Post> posts;
 
-    public Date getRegistration() {
-        return registration;
-    }
-
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -57,14 +52,6 @@ public class User extends Model{
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public List<ValidationError> validate() {
-        List<ValidationError> errors = new ArrayList<>();
-        if (User.findByEmail(email) != null) {
-            errors.add(new ValidationError("email", "This e-mail is already registered."));
-        }
-        return errors.isEmpty() ? null : errors;
     }
 
     public static User findByEmailAndPassword(String email, String password) {
@@ -80,19 +67,6 @@ public class User extends Model{
                 .eq("email", email.toLowerCase()).
                         findUnique();
     }
-
-    public static boolean exists(String email){
-        return (find.where().eq("email", email).findRowCount() == 1) ? true: false;
-    }
-
-    public static User findById(Long id){
-        return find.byId(id);
-    }
-
-    public byte[] getPassword() {
-        return password;
-    }
-
 
     public void setId(Long id) {
         this.id = id;
@@ -118,14 +92,6 @@ public class User extends Model{
         this.password = hashPassword(password);
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
-
     public Long getId() {
         return id;
     }
@@ -144,6 +110,10 @@ public class User extends Model{
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Date getRegistration() {
+        return registration;
     }
 
 }

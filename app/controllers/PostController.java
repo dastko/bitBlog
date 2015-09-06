@@ -5,6 +5,8 @@ import helpers.SessionHelper;
 import models.Comment;
 import models.Post;
 import models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,48 +21,65 @@ import java.util.List;
  */
 public class PostController extends Controller {
 
+    final static Logger logger = LoggerFactory.getLogger(PostController.class);
+
     @Security.Authenticated(CurrentUser.class)
-    public Result newPost() {
-        List <Post> postList = Post.findBlogPostsByUser(SessionHelper.currentUser(ctx()));
-        return ok(newpost.render(new Form<>(Post.class), postList));
+    public Result showNewPost() {
+        try {
+            List<Post> postList = Post.findBlogPostsByUser(SessionHelper.currentUser(ctx()));
+            return ok(newpost.render(new Form<>(Post.class), postList));
+        } catch (Exception e){
+            logger.warn("Post: " + e);
+            return redirect("/login");
+        }
     }
 
     @Security.Authenticated(CurrentUser.class)
     public Result addPost() {
         Form<Post> postForm = Form.form(Post.class).bindFromRequest();
-        List <Post> postList = Post.findBlogPostsByUser(SessionHelper.currentUser(ctx()));
-        if (postForm.hasErrors()) {
-            return badRequest(newpost.render(postForm, postList));
+        try {
+            List <Post> postList = Post.findBlogPostsByUser(SessionHelper.currentUser(ctx()));
+            if (postForm.hasErrors()) {
+                return badRequest(newpost.render(postForm, postList));
+            }
+            Post newPost = new Post();
+            newPost.setTitle(postForm.get().getTitle());
+            newPost.setContent(postForm.get().getContent());
+            newPost.setUser(getUser());
+            newPost.save();
+            flash("postAdded", "Post added successfully");
+            return redirect("/");
+        }catch (Exception e){
+            logger.warn("Add Post Failed" + e);
+            return redirect("/login");
         }
-        Post newPost = new Post();
-        newPost.setTitle(postForm.get().getTitle());
-        newPost.setContent(postForm.get().getContent());
-        newPost.setUser(getUser());
-        newPost.save();
-        flash("postAdded", "Post added successfully");
-        return redirect("/");
     }
 
     @Security.Authenticated(CurrentUser.class)
     public Result deletePost(Long id){
         Post post = Post.findBlogPostById(id);
         if(post == null){
-            return badRequest();
+            return notFound(views.html.errorPages.badRequest.render("Post Not Found!"));
         }
         if(SessionHelper.currentUser(ctx()).getId() == post.getUser().getId()){
             post.delete();
             return redirect("/");
         }
-        return badRequest();
+        return badRequest(views.html.errorPages.badRequest.render("Mismatch"));
     }
 
     public Result getPost(Long id){
-        Post newPost = Post.findBlogPostById(id);
-        List<Comment> commentList = Comment.findAllCommentsByPost(newPost);
-        if(newPost == null){
-            return badRequest();
+        try {
+            Post newPost = Post.findBlogPostById(id);
+            List<Comment> commentList = Comment.findAllCommentsByPost(newPost);
+            if(newPost == null){
+                return notFound(views.html.errorPages.badRequest.render("Post Not Found!"));
+            }
+            return ok(post.render(newPost, commentList, new Form<>(CommentController.CommentForm.class)));
+        } catch (Exception e){
+            logger.warn("Post Not Found:" + e);
+            return redirect("/login");
         }
-        return ok(post.render(newPost, commentList, new Form<>(CommentController.CommentForm.class)));
     }
 
     private static User getUser() {
