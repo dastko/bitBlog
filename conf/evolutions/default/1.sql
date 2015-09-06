@@ -8,6 +8,7 @@ create table comment (
   post_id                   bigint,
   user_id                   bigint,
   content                   TEXT,
+  date                      datetime,
   constraint pk_comment primary key (id))
 ;
 

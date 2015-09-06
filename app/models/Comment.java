@@ -1,10 +1,12 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.data.format.Formats;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +23,9 @@ public class Comment extends Model {
     private User user;
     @Column(columnDefinition = "TEXT")
     private String content;
+    @Formats.DateTime(pattern = "dd/MM/yyyy")
+    @Column(columnDefinition = "datetime")
+    private Date date = new Date();
 
     public static final Model.Finder<Long, Comment> find = new Model.Finder<>(
             Comment.class);
@@ -39,16 +44,22 @@ public class Comment extends Model {
                 .findList();
     }
 
-    public static Comment findById(Long id){
+    public static Comment findById(Long id) {
         return find.byId(id);
     }
-    public static void delete(Long id){
+
+    public static List<Comment> findLastComment() {
+        return find.orderBy("date desc").setMaxRows(10).findList();
+    }
+
+    public static void delete(Long id) {
         find.byId(id).delete();
     }
 
     public Long getId() {
         return id;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
@@ -71,5 +82,9 @@ public class Comment extends Model {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

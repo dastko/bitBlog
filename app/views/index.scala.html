@@ -38,10 +38,27 @@
                 }
             </div>
             <div class="col-md-4">
-                    <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>About Us Widget</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">About Blog</h3>
+                    </div>
+                    <div class="panel-body">
+                        Aenean in varius dui. Pellentesque habitant morbi tristique senectus et netus
+                        et malesuada fames ac turpis egestas. Aliquam ac tempor dolor. Fusce aliquam libero metus, eu lobortis velit imperdiet eget. Pellentesque leo nunc, bibendum fermentum magna eu, feugiat elementum enim. Nulla facilisi. Praesent rhoncus rhoncus ex vel ullamcorper.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Last 10 comments</h3>
+                    </div>
+                    @for(comment <- Comment.findLastComment()) {
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="@routes.PostController.getPost(comment.getPost.getId)">@comment.getContent</a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </div>
@@ -58,3 +75,4 @@
         </footer>
     </div>
 }
+
