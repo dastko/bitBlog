@@ -1,31 +1,32 @@
-/**
- * Created by dastko on 9/6/15.
- */
-(function() {
+(function () {
+    angular.module('bitBlog', ['angularUtils.directives.dirPagination'])
+        .controller("MyController", ['$scope', 'dataService', MyController]);
 
-    angular.module("bitBlog", [
+    function MyController($scope, dataService) {
+        $scope.currentPage = 1;
+        $scope.pageSize = 10;
+        $scope.posts = [];
 
-    ]).controller('CommentCtrl', function ($scope, $http) {
+        //var vm = this;
 
-        $scope.postForm = {};
+        dataService.getAllPosts()
+            .then(getOnlineSuccess)
+            .catch(errorCallback);
 
-        $scope.comment = function () {
-
-            $http.post('api/comment', $scope.postForm)
-                .success(function (data) {
-                    console.log(data);
-                    $scope.postForm = {};
-                }).error(function (data) {
-                    console.log(data);
-                });
+        function getOnlineSuccess(posts) {
+            console.log("Data Friends" + posts.length);
+            $scope.allPosts = posts;
         }
-        $scope.getComments = function () {
-            $http.get('api/comment')
-                .success(function (data) {
-                    $scope.comments = data;
-                });
-        };
-        $scope.getComments();
-    });
 
+        function errorCallback(msg) {
+            console.log(msg);
+        }
+
+        $scope.posts.push('meal ' + $scope.allPosts);
+
+
+        $scope.pageChangeHandler = function (num) {
+            console.log('meals page changed to ' + num);
+        };
+    }
 }());

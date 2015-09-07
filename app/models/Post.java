@@ -6,7 +6,6 @@ import play.data.validation.Constraints;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
 /**
  * Created by dastko on 9/4/15.
  */
@@ -47,6 +46,7 @@ public class Post extends Model {
     public static List<Post> findAllPosts(){
         return find.orderBy("date desc").findList();
     }
+
 
     public String getContent() {
         return content;

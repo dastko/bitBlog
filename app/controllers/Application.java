@@ -19,6 +19,7 @@ public class Application extends Controller {
     private static String url = Play.application().configuration().getString("url");
 
     public Result index() {
+
         String message = flash("postAdded");
         return ok(index.render(message));
     }

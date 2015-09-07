@@ -7,7 +7,9 @@ import models.Post;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import play.cache.Cached;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -84,6 +86,15 @@ public class PostController extends Controller {
             logger.warn("Post Not Found:" + e);
             return redirect("/login");
         }
+    }
+
+    // Posts in json (for angular pagination)
+    public Result jsonPosts(){
+        List <Post> posts = Post.findAllPosts();
+        if(posts == null){
+            return badRequest(Json.toJson("Error"));
+        }
+        return ok(Json.toJson(posts));
     }
 
     private static User getUser() {

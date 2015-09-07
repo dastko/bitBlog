@@ -17,8 +17,8 @@ public class MailHelper {
         try {
             HtmlEmail mail = new HtmlEmail();
             mail.setSubject("bitBlog Welcome");
-            mail.setFrom("bitBlog <bitblog@gmail.com>");
-            mail.addTo("Contact <bitblog@gmail.com>");
+            mail.setFrom("bitBlog <bitblog2015@gmail.com>");
+            mail.addTo("Contact <bitblog2015@gmail.com>");
             mail.addTo(email);
             mail.setMsg(message);
             mail.setHtmlMsg(String

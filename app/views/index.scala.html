@@ -3,10 +3,9 @@
 @main("Welcome to Play") {
 
     <!-- Page Content -->
-    <div class="container">
-        <div class="row">
+    <div class="container" ng-controller="MyController" class="my-controller">
+        <div class="row" dir-paginate="post in allPosts | filter:q | itemsPerPage: 1" current-page="currentPage">
                 <!-- Blog Entries Column -->
-
             <div class="col-md-8">
                 @if(message != null) {
                     <div class="bs-component">
@@ -17,27 +16,21 @@
                         </div>
                         <div id="source-button" class="btn btn-primary btn-xs" style="display : none ;">&lt; &gt;</div></div>
                 }
-
                     <!-- First Blog Post -->
-                    <!-- Ovako ne raditi - poslati listu iz kontrolera! -->
-
-                @for(post <- Post.findAllPosts()){
-                    <h2>
-                    <a href="@routes.PostController.getPost(post.getId)">@post.getTitle</a>
+                <h2>
+                    <a href="/post/{{post.id}}"> {{ post.title }}</a>
                 </h2>
                 <p class="lead">
-                    by <a href="/">@post.getUser.getEmail</a>
+                    by <a href="#">{{post.user.email}}</a>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on @post.getDate</p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{post.date | date:dateFormat}} </p>
                 <hr>
-                <img class="img-responsive" src="@routes.Assets.versioned("/images/image" + post.getId + ".jpg")" alt="">
+                <img class="img-responsive" src="@routes.Assets.versioned("/images/image" + "{{post.id}}" + ".jpg")" alt="">
                 <hr>
-                    @if(post.getContent.length > 240) {
-                        <p>@post.getContent.substring(0, 240)...</p>
-                    }
-                <a class="btn btn-primary" href="@routes.PostController.getPost(post.getId)">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <p>{{post.content | limitTo: 240}}</p>
+                <a class="btn btn-primary" href="/post/{{post.id}}">
+                    Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
-                }
             </div>
             <div class="col-md-4">
                 <div class="panel panel-primary">
@@ -53,7 +46,7 @@
             <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Last 10 comments</h3>
+                        <h3 class="panel-title">Latest Comments</h3>
                     </div>
                     @for(comment <- Comment.findLastComment()) {
                         <ul class="list-group">
@@ -64,6 +57,7 @@
                 </div>
             </div>
         </div>
+        <dir-pagination-controls></dir-pagination-controls>
     </div>
     <div class="container">
             <!-- Footer -->

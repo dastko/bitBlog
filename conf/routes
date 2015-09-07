@@ -19,6 +19,7 @@ POST        /post/:id                      controllers.CommentController.addComm
 POST        /post                          controllers.PostController.addPost()
 GET         /post/delete/:id               controllers.PostController.deletePost(id: Long)
 GET         /validate/:token               controllers.UserController.emailValidation(token: String)
+GET         /posts                         controllers.PostController.jsonPosts()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
