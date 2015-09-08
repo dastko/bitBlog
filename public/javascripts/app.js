@@ -7,7 +7,7 @@
         $scope.pageSize = 10;
         $scope.posts = [];
 
-        //var vm = this;
+        var vm = this;
 
         dataService.getAllPosts()
             .then(getOnlineSuccess)
@@ -15,6 +15,7 @@
 
         function getOnlineSuccess(posts) {
             console.log("Data Friends" + posts.length);
+            vm.allPost = posts;
             $scope.allPosts = posts;
         }
 
@@ -22,11 +23,11 @@
             console.log(msg);
         }
 
-        $scope.posts.push('meal ' + $scope.allPosts);
+        $scope.posts.push($scope.allPosts);
 
 
         $scope.pageChangeHandler = function (num) {
-            console.log('meals page changed to ' + num);
+            console.log('Blog page changed to ' + num);
         };
     }
 }());

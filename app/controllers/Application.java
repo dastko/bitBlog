@@ -52,6 +52,7 @@ public class Application extends Controller {
                 user.setEmail(newUser.email);
                 user.setPassword(newUser.password);
                 user.setToken(UUID.randomUUID().toString());
+                user.role = User.Role.User;
                 user.save();
                 // Sending Email To user
                 String host = url + "validate/" + user.getToken();

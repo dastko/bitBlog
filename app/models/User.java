@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.typesafe.config.ConfigException;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import javax.persistence.*;
@@ -40,6 +41,9 @@ public class User extends Model {
     @Column(unique = true)
     private String token;
     private boolean validated = false;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('User', 'Customer', 'Admin')")
+    public Role role;
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -80,6 +84,13 @@ public class User extends Model {
         user.setValidated(true);
         user.update();
         return true;
+    }
+
+    // Enumeration for user roles!
+    public enum Role {
+        User,
+        Customer,
+        Admin,
     }
 
     public void setId(Long id) {
@@ -141,4 +152,5 @@ public class User extends Model {
     public void setValidated(boolean validated) {
         this.validated = validated;
     }
+
 }

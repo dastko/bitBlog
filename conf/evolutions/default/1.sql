@@ -31,6 +31,8 @@ create table user (
   phone                     varchar(255),
   token                     varchar(255),
   validated                 tinyint(1) default 0,
+  role                      ENUM('User', 'Customer', 'Admin'),
+  constraint ck_user_role check (role in ('User','Customer','Admin')),
   constraint uq_user_email unique (email),
   constraint uq_user_token unique (token),
   constraint pk_user primary key (id))

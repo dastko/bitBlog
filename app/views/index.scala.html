@@ -3,10 +3,10 @@
 @main("Welcome to Play") {
 
     <!-- Page Content -->
-    <div class="container" ng-controller="MyController" class="my-controller">
-        <div class="row" dir-paginate="post in allPosts | filter:q | itemsPerPage: 1" current-page="currentPage">
+    <div class="container">
+        <div class="row" ng-controller="MyController" class="my-controller">
                 <!-- Blog Entries Column -->
-            <div class="col-md-8">
+            <div class="col-md-8"  dir-paginate="post in allPosts | filter:q | itemsPerPage: 1" current-page="currentPage">
                 @if(message != null) {
                     <div class="bs-component">
                         <div class="alert alert-dismissible alert-success">
@@ -14,7 +14,8 @@
                             <strong>Well done!</strong><a href="#" class="alert-link">
                         @message </a>.
                         </div>
-                        <div id="source-button" class="btn btn-primary btn-xs" style="display : none ;">&lt; &gt;</div></div>
+                        <div id="source-button" class="btn btn-primary btn-xs" style="display : none ;">&lt; &gt;</div>
+                    </div>
                 }
                     <!-- First Blog Post -->
                 <h2>
@@ -48,6 +49,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Latest Comments</h3>
                     </div>
+                        <!-- Ovako ne raditi - ne pozivati direktno metodu iz modela, vec poslati listu iz kontrolera. -->
                     @for(comment <- Comment.findLastComment()) {
                         <ul class="list-group">
                             <li class="list-group-item"><a href="@routes.PostController.getPost(comment.getPost.getId)">@comment.getContent</a>
