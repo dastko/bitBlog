@@ -43,7 +43,7 @@ public class User extends Model {
     private boolean validated = false;
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "ENUM('User', 'Customer', 'Admin')")
-    public Role role;
+    private Role role;
 
     public static final Finder<Long, User> find = new Finder<>(
             User.class);
@@ -90,7 +90,7 @@ public class User extends Model {
     public enum Role {
         User,
         Customer,
-        Admin,
+        Admin
     }
 
     public void setId(Long id) {
@@ -153,4 +153,11 @@ public class User extends Model {
         this.validated = validated;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

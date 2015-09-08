@@ -17,6 +17,8 @@ public class Application extends Controller {
 
     final static Logger logger = LoggerFactory.getLogger(Application.class);
     private static String url = Play.application().configuration().getString("url");
+    private static String admin = Play.application().configuration().getString("admin");
+
 
     public Result index() {
 
@@ -52,7 +54,12 @@ public class Application extends Controller {
                 user.setEmail(newUser.email);
                 user.setPassword(newUser.password);
                 user.setToken(UUID.randomUUID().toString());
-                user.role = User.Role.User;
+                // Default Role for all users "USER"
+                user.setRole(User.Role.User);
+                // Admin Role
+                if(newUser.email.equals(admin)){
+                    user.setRole(User.Role.Admin);
+                }
                 user.save();
                 // Sending Email To user
                 String host = url + "validate/" + user.getToken();
