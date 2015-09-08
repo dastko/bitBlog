@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.typesafe.config.ConfigException;
 import play.data.format.Formats;
 import play.data.validation.Constraints;

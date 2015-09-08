@@ -34,6 +34,12 @@
                 @post.getContent
                 </p>
                 <hr>
+                <div class="list-inline">
+                @for(tag <- post.getTags) {
+                    <li><a href="#">@tag.name</a></li>
+                }
+                </div>
+                <hr>
                     <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
@@ -45,7 +51,7 @@
                     </form>
                 </div>
                 <hr>
-                    <!-- Comment -->
+                <!-- Comment -->
                 @for(comment <- comments) {
                     <div class="media">
                         <a class="pull-left" href="#">

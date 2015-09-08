@@ -21,6 +21,13 @@ create table post (
   constraint pk_post primary key (id))
 ;
 
+create table tag (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  post_id                   bigint,
+  constraint pk_tag primary key (id))
+;
+
 create table user (
   id                        bigint auto_increment not null,
   email                     varchar(255),
@@ -44,6 +51,8 @@ alter table comment add constraint fk_comment_user_2 foreign key (user_id) refer
 create index ix_comment_user_2 on comment (user_id);
 alter table post add constraint fk_post_user_3 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_post_user_3 on post (user_id);
+alter table tag add constraint fk_tag_post_4 foreign key (post_id) references post (id) on delete restrict on update restrict;
+create index ix_tag_post_4 on tag (post_id);
 
 
 
@@ -54,6 +63,8 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table comment;
 
 drop table post;
+
+drop table tag;
 
 drop table user;
 

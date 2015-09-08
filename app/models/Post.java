@@ -5,7 +5,11 @@ import play.data.format.Formats;
 import play.data.validation.Constraints;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+
 /**
  * Created by dastko on 9/4/15.
  */
@@ -25,6 +29,8 @@ public class Post extends Model {
     @Column(columnDefinition = "datetime")
     private Date date = new Date();
     private String title;
+    @OneToMany(cascade=CascadeType.ALL)
+    private Set<Tag> tags;
 
     public static final Model.Finder<Long, Post> find = new Model.Finder<>(
             Post.class);
@@ -41,6 +47,11 @@ public class Post extends Model {
                 .where()
                 .eq("id", id)
                 .findUnique();
+    }
+
+    public Post tagIt(String name){
+        tags.add(Tag.findOrCreate(name));
+        return this;
     }
 
     public static List<Post> findAllPosts(){
@@ -78,5 +89,9 @@ public class Post extends Model {
 
     public Long getId() {
         return id;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
     }
 }

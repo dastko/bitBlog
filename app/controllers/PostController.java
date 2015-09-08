@@ -4,6 +4,7 @@ import helpers.CurrentUser;
 import helpers.SessionHelper;
 import models.Comment;
 import models.Post;
+import models.Tag;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,14 +46,13 @@ public class PostController extends Controller {
                 return badRequest(newpost.render(postForm, postList));
             }
             Post newPost = postForm.get();
+            String tag = postForm.data().get("tag");
+            String [] splitTagsByComma = tag.trim().split("\\s*,\\s*");
+            for(String strings : splitTagsByComma){
+                newPost.tagIt(strings);
+            }
             newPost.setUser(getUser());
             newPost.save();
-            //Same
-//            Post newPost = new Post();
-//            newPost.setTitle(postForm.get().getTitle());
-//            newPost.setContent(postForm.get().getContent());
-//            newPost.setUser(getUser());
-//            newPost.save();
             flash("postAdded", "Post added successfully");
             return redirect("/");
         }catch (Exception e){
