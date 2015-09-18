@@ -7,12 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.data.validation.Constraints;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.edit;
 import views.html.profile;
+
+import java.util.List;
 
 /**
  * Created by dastko on 9/4/15.
@@ -82,5 +84,13 @@ public class UserController extends Controller {
             logger.warn("Email Validation Exception:" + e);
             return redirect("/login");
         }
+    }
+
+    public Result allUsers(){
+        List<User> users = User.findAll();
+        if(users == null){
+            return noContent();
+        }
+        return ok(Json.toJson(users));
     }
 }

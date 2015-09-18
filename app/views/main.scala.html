@@ -22,6 +22,17 @@
                 <div class="navbar-header">
                     <a href="/" class="navbar-brand">bitBlog</a>
                 </div>
+                <form class="navbar-form navbar-left" role="search" ng-controller="SearchController">
+                    <div class="form-group">
+                        <input type="text"  ng-model="search" ng-change="change()"
+                        class="form-control" placeholder="Search">
+                    </div>
+                    <ul class="dropdown open" aria-labelledby="download">
+                        <ul class="dropdown-menu" role="menu"  ng-if="items.length">
+                            <li ng-repeat="i in items | limitTo:15"><a href="#">{{i.email}}</a></li>
+                        </ul>
+                    </ul>
+                </form>
                 @if(currentUser == null) {
                     <ul class="nav navbar-nav pull-right">
                         <li><a href="/registration" >Sign up!</a></li>
@@ -53,7 +64,8 @@
         <script src="@routes.Assets.versioned("javascripts/app.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/dirPagination.js")"></script>
         <script src="@routes.Assets.versioned("javascripts/data.js")"></script>
-
-
+        <script src="@routes.Assets.versioned("javascripts/searchFor.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/searchController.js")"></script>
+        <script src="@routes.Assets.versioned("javascripts/searchController.js")"></script>
     </body>
 </html>

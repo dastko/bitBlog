@@ -1,8 +1,8 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import com.avaje.ebean.Model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.typesafe.config.ConfigException;
+import com.avaje.ebean.annotation.Index;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import javax.persistence.*;
@@ -24,9 +24,13 @@ public class User extends Model {
     @Constraints.MaxLength(255)
     @Constraints.Required()
     @Constraints.Email
+    // Indexing email column
+    @Index
     private String email;
     @Constraints.MaxLength(255)
     @Constraints.Required
+    // Indexing email column
+    @Index
     private String name;
     @Column(length = 64, nullable = false)
     private byte[] password;
@@ -73,6 +77,11 @@ public class User extends Model {
                         findUnique();
     }
 
+    public static List <User> searchTableByInputString(String name){
+       return find.where().disjunction().or(Expr.like("name", "%" + name + "%"), Expr.like("email", "%" + name + "%")).findList();
+    }
+
+
     public static User findUserByToken(String token) {
         return find.where().eq("token", token).findUnique();
     }
@@ -85,6 +94,14 @@ public class User extends Model {
         user.setValidated(true);
         user.update();
         return true;
+    }
+
+    public static User findByRole(Role role){
+        return find.where().eq("role", role).findUnique();
+    }
+
+    public static List <User> findAll (){
+        return find.all();
     }
 
     // Enumeration for user roles!

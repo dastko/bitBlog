@@ -11,8 +11,10 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   javaCore,
+  filters,
   "mysql" % "mysql-connector-java" % "5.1.27",
-  "com.typesafe.play" %% "play-mailer" % "2.4.1"
+  "com.typesafe.play" %% "play-mailer" % "2.4.1",
+  "org.apache.lucene" % "lucene-core" % "5.3.0"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the

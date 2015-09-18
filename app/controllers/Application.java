@@ -7,21 +7,20 @@ import org.slf4j.LoggerFactory;
 import play.Play;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.filters.csrf.AddCSRFToken;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.*;
 
 import java.util.UUID;
-
 public class Application extends Controller {
 
     final static Logger logger = LoggerFactory.getLogger(Application.class);
     private static String url = Play.application().configuration().getString("url");
     private static String admin = Play.application().configuration().getString("admin");
 
-
+    @AddCSRFToken
     public Result index() {
-
         String message = flash("postAdded");
         return ok(index.render(message));
     }
@@ -64,7 +63,6 @@ public class Application extends Controller {
                 // Sending Email To user
                 String host = url + "validate/" + user.getToken();
                 MailHelper.send(user.getEmail(), host);
-                session().clear();
                 session("username", newUser.email);
                 return redirect("/");
             }
@@ -85,8 +83,9 @@ public class Application extends Controller {
             if (user == null) {
                 return ok(login.render(loginForm.errorsAsJson().asText(), loginForm));
             } else {
-                session().clear();
                 session("username", loggingInUser.email);
+                user.setToken(UUID.randomUUID().toString());
+                user.update();
                 return redirect("/");
             }
         } catch (Exception e) {

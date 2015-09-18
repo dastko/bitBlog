@@ -22,6 +22,9 @@ GET         /validate/:token               controllers.UserController.emailValid
 GET         /posts                         controllers.PostController.jsonPosts()
 GET         /tag/:tag                      controllers.TagController.postsByTag(tag: String)
 GET         /tags                          controllers.TagController.getTags()
+GET         /search/:input                 controllers.SearchController.search(input: String)
+GET         /users                         controllers.UserController.allUsers()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)

@@ -9,7 +9,8 @@
     function dataService($http, $q) {
 
         return {
-            getAllPosts: getAllPosts
+            getAllPosts: getAllPosts,
+            doSearch: doSearch
         };
 
         function getAllPosts() {
@@ -29,6 +30,16 @@
 
         function sendGetPostsError(response) {
             return $q.reject('Error: ' + response.status);
+        }
+
+        function doSearch(){
+
+            return $http({
+                method: 'GET',
+                url: 'users'
+            })
+                .then(sendResponseData)
+                .catch(sendGetPostsError)
         }
     }
 }());

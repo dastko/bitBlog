@@ -1,14 +1,13 @@
 package controllers;
 
+import helpers.BasicAuthenticator;
 import helpers.CurrentUser;
 import helpers.SessionHelper;
 import models.Comment;
 import models.Post;
-import models.Tag;
 import models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import play.cache.Cached;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -26,7 +25,7 @@ public class PostController extends Controller {
 
     final static Logger logger = LoggerFactory.getLogger(PostController.class);
 
-    @Security.Authenticated(CurrentUser.class)
+    @Security.Authenticated(BasicAuthenticator.class)
     public Result showNewPost() {
         try {
             List<Post> postList = Post.findBlogPostsByUser(SessionHelper.currentUser(ctx()));
@@ -37,7 +36,7 @@ public class PostController extends Controller {
         }
     }
 
-    @Security.Authenticated(CurrentUser.class)
+    @Security.Authenticated(BasicAuthenticator.class)
     public Result addPost() {
         Form<Post> postForm = Form.form(Post.class).bindFromRequest();
         try {
@@ -61,7 +60,7 @@ public class PostController extends Controller {
         }
     }
 
-    @Security.Authenticated(CurrentUser.class)
+    @Security.Authenticated(BasicAuthenticator.class)
     public Result deletePost(Long id){
         Post post = Post.findBlogPostById(id);
         if(post == null){
@@ -89,6 +88,7 @@ public class PostController extends Controller {
     }
 
     // Posts in json (for angular pagination)
+    @Security.Authenticated(BasicAuthenticator.class)
     public Result jsonPosts(){
         List <Post> posts = Post.findAllPosts();
         if(posts == null){

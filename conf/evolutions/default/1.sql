@@ -55,6 +55,8 @@ alter table tag add constraint fk_tag_post_4 foreign key (post_id) references po
 create index ix_tag_post_4 on tag (post_id);
 
 
+create index ix_user_email_5 on user(email);
+create index ix_user_name_6 on user(name);
 
 # --- !Downs
 

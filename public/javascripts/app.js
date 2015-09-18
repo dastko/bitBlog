@@ -1,5 +1,5 @@
 (function () {
-    angular.module('bitBlog', ['angularUtils.directives.dirPagination'])
+   angular.module('bitBlog', ['angularUtils.directives.dirPagination'])
         .controller("MyController", ['$scope', 'dataService', MyController]);
 
     function MyController($scope, dataService) {
@@ -29,5 +29,6 @@
         $scope.pageChangeHandler = function (num) {
             console.log('Blog page changed to ' + num);
         };
+
     }
 }());
